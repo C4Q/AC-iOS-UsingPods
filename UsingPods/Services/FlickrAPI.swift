@@ -23,7 +23,7 @@ class FlickrAPI {
     // Step 2: create the delegate property
     weak var delegate: FlickrAPIDelegate?
 
-    func photoSearch(photoType: String, location: CLLocationCoordinate2D?) {
+    func photoSearch(photoType: String, location: CLLocationCoordinate2D) {
         // TODO: use Alamofire to make network request
         
         var params: [String: Any] = ["api_key": APIKeys.apiKey,
@@ -39,6 +39,8 @@ class FlickrAPI {
         // TODO: ability to update lat and lon
         
         params["text"] = photoType
+        params["lat"] = location.latitude
+        params["lon"] = location.longitude
         
         Alamofire.request(flickrBaseURL, method: .get, parameters: params, encoding: URLEncoding.default, headers: nil).responseData { (dataResponse) in
             if let error = dataResponse.error {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class PhotoFeedViewController: UIViewController {
     
@@ -21,13 +22,17 @@ class PhotoFeedViewController: UIViewController {
     }
     
     private var flickrAPIService: FlickrAPI!
+    private var appleLocationService: AppleLocationService!
+    private var currentPhotoType = ""
     
-    init(flickrAPIService: FlickrAPI) {
+    init(flickrAPIService: FlickrAPI, appleLocationService: AppleLocationService) {
         super.init(nibName: nil, bundle: nil)
         self.flickrAPIService = flickrAPIService
+        self.appleLocationService = appleLocationService
         
         // Step 1: assign self to conform to protocol
         self.flickrAPIService.delegate = self
+        self.appleLocationService.delegate = self 
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -88,12 +93,17 @@ extension PhotoFeedViewController: UISearchBarDelegate {
         // TODO: use AppleLocationService to geocode the address to a CLLocation
         print("photo serch text: \(photoSearchText)")
         print("address search text: \(addressSearchText)")
-        flickrAPIService.photoSearch(photoType: photoSearchText, location: nil)
+        currentPhotoType = photoSearchText
+        appleLocationService.geocodeAddress(address: addressSearchText)
     }
 }
 
-// MARK:- FlickrAPIDelegate
-// Step 2: implement required methods of delegate
+extension PhotoFeedViewController: AppleLocationServiceDelegate {
+    func appleLocationService(_ appleLocationService: AppleLocationService, didReceiveCoordinates coordinate: CLLocationCoordinate2D) {
+        flickrAPIService.photoSearch(photoType: currentPhotoType, location: coordinate)
+    }
+}
+
 extension PhotoFeedViewController: FlickrAPIDelegate {
     func flickrService(_ flickrService: FlickrAPI, didReceivePhotos photos: [Photo]) {
         self.photos = photos

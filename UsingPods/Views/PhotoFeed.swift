@@ -36,7 +36,7 @@ class PhotoFeed: UIView {
         layout.sectionInset = UIEdgeInsetsMake(cellSpacing, cellSpacing, cellSpacing, cellSpacing)
         let cv = UICollectionView(frame: bounds, collectionViewLayout: layout)
         cv.register(PhotoCollectionCell.self, forCellWithReuseIdentifier: "PhotoCollectionCell")
-        cv.backgroundColor = .blue
+        cv.backgroundColor = .white
         return cv
     }()
     
@@ -53,17 +53,23 @@ class PhotoFeed: UIView {
 extension PhotoFeed {
     private func setupViews() {
         backgroundColor = .white
-        setupAddressSearchBar()
+        setupLocationBar()
         setupCollectionView()
     }
     
-    private func setupAddressSearchBar() {
+    private func setupLocationBar() {
         addSubview(addressSearchBar)
-        // TODO: use SnapKit to layout constraints
+        addressSearchBar.snp.makeConstraints { (make) in
+            make.top.equalTo(safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalTo(self)
+        }
     }
     
     private func setupCollectionView() {
         addSubview(collectionView)
-        // TODO: use SnapKit to layout constraints
+        collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(addressSearchBar.snp.bottom)
+            make.leading.trailing.bottom.equalTo(self)
+        }
     }
 }

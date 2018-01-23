@@ -11,7 +11,6 @@ import SnapKit
 import Kingfisher
 
 class PhotoCollectionCell: UICollectionViewCell {
-    // image
     lazy var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -47,21 +46,7 @@ extension PhotoCollectionCell {
 // MARK:- Helper Methods
 extension PhotoCollectionCell {
     public func configureCell(photo: Photo) {
-        
         imageView.kf.indicatorType = .activity
         imageView.kf.setImage(with: photo.url_m, placeholder: UIImage.init(named: "placeholder-image"), options: nil, progressBlock: nil) { (image, error, cacheType, url) in}
-        
-        // TODO: fix the image flickering here using Kingfisher
-//        DispatchQueue.global().async {
-//            do {
-//                let imageData = try Data.init(contentsOf: photo.url_m)
-//                let image  = UIImage.init(data: imageData)
-//                DispatchQueue.main.async {
-//                    self.imageView.image = image
-//                }
-//            } catch {
-//                print("image processing error: \(error.localizedDescription)")
-//            }
-//        }
     }
 }

@@ -22,9 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // initialize a FlickrAPI instance
         let flickrAPIService = FlickrAPI()
         
+        // initialize an Apple Location Service
+        let appleLocationService = AppleLocationService() 
+        
         // Using Dependency Injection to pass required services to the
         // PhotoFeedViewController
-        let photoFeedVC = PhotoFeedViewController(flickrAPIService: flickrAPIService)
+        let photoFeedVC = PhotoFeedViewController(flickrAPIService: flickrAPIService,
+                                                  appleLocationService: appleLocationService)
         
         let navController = UINavigationController(rootViewController: photoFeedVC)
         
