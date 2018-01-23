@@ -19,7 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // TODO: use dependency injection to pass any required dependencies to the PhotoFeedViewController
         
-        let photoFeedVC = PhotoFeedViewController()
+        // initialize a FlickrAPI instance
+        let flickrAPIService = FlickrAPI()
+        
+        // Using Dependency Injection to pass required services to the
+        // PhotoFeedViewController
+        let photoFeedVC = PhotoFeedViewController(flickrAPIService: flickrAPIService)
+        
         let navController = UINavigationController(rootViewController: photoFeedVC)
         
         window = UIWindow(frame: UIScreen.main.bounds)
