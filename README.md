@@ -7,3 +7,11 @@ The Following libraries include:
 * Alamofire: for networking 
 * SnapKit: for programmable autolayout
 * Kingfisher: image caching 
+
+**Note:** After cloning this project create the following Swift file named ```APIKeys.swift``` as it will be missing from your project and cause a compile time error: 
+
+```swift
+struct APIKeys {
+    static let apiKey = "YOUR FLICKR API KEY GOES HERE"
+}
+```
